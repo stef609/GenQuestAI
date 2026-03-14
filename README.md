@@ -38,11 +38,74 @@ ollama launch claude --model kimi-k2.5:cloud
 /output_style 
     -> change output_style (detailed/learning/custom...)
 
-
-
-
-# Project setup
+# Project init
 uv init
 .gitignore file
+
+# Summary
+
+  Built a complete Zork-playing LLM agent with the following components:
+
+  ┌─────────────────────┬───────────────┬───────┐
+  │      Component      │     File      │ Tests │
+  ├─────────────────────┼───────────────┼───────┤
+  │ Configuration       │ src/config.py │ 17    │
+  ├─────────────────────┼───────────────┼───────┤
+  │ Logger              │ src/logger.py │ 14    │
+  ├─────────────────────┼───────────────┼───────┤
+  │ Zork Game Interface │ src/game.py   │ 20    │
+  ├─────────────────────┼───────────────┼───────┤
+  │ LLM Agent           │ src/agent.py  │ 13    │
+  ├─────────────────────┼───────────────┼───────┤
+  │ Game Runner         │ src/runner.py │ 12    │
+  ├─────────────────────┼───────────────┼───────┤
+  │ Total               │               │ 76    │
+  └─────────────────────┴───────────────┴───────┘
+
+# Project Structure
+
+  src/
+  ├── __init__.py
+  ├── config.py      # Pydantic settings (max_iterations, ollama_model, etc.)
+  ├── logger.py      # Rich console output for progress
+  ├── game.py        # Zork process management via pexpect
+  ├── agent.py       # Ollama LLM integration via LangChain
+  ├── runner.py      # Main game loop orchestration
+  └── main.py        # Entry point
+
+  tests/
+  ├── test_config.py    # Settings validation
+  ├── test_logger.py    # Progress display
+  ├── test_game.py      # Zork interface
+  ├── test_agent.py     # LLM agent
+  └── test_runner.py    # Game loop
+
+# How to Run
+
+  Prerequisites:
+  - Zork installed (e.g., sudo apt install frotz)
+  - Ollama running locally with a model pulled
+
+  Run the application:
+  uv run src/main.py
+
+  Configure via environment variables:
+  export MAX_ITERATIONS=100
+  export OLLAMA_MODEL="qwen2.5:14b"
+  export ZORK_GAME_PATH="/usr/games/zork"
+  uv run src/main.py
+
+  Run tests:
+  uv run pytest tests/ -v
+
+  The application will:
+  1. Start Zork and display the initial room
+  2. Loop up to max_iterations times:
+    - Send game output to Ollama LLM
+    - Get the LLM's chosen command
+    - Send command to Zork
+    - Display the result
+  3. Stop on QUIT, game over, or max iterations
+  4. Display final score
 
 
