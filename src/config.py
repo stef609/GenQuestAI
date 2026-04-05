@@ -14,20 +14,20 @@ class Settings(BaseSettings):
     )
 
     max_iterations: int = Field(
-        default=50,
+        default=200,
         ge=1,
         description="Maximum number of game iterations",
     )
     ollama_model: str = Field(
-        default="qwen2.5:14b",
+        default="llama3.1:latest",
         description="Ollama model name to use",
     )
     ollama_url: str = Field(
-        default="http://localhost:11434",
+        default="http://tsumego:11434",
         description="Ollama API URL",
     )
     zork_game_path: str = Field(
-        default="/usr/games/zork",
+        default="/snap/bin/zork",
         description="Path to Zork game executable",
     )
     verbose: bool = Field(

@@ -20,12 +20,12 @@ class TestSettingsDefaults:
     def test_default_ollama_model(self):
         """Test ollama_model defaults to qwen2.5:14b."""
         settings = Settings()
-        assert settings.ollama_model == "qwen2.5:14b"
+        assert settings.ollama_model == "llama3.1:latest"
 
     def test_default_ollama_url(self):
         """Test ollama_url defaults to localhost."""
         settings = Settings()
-        assert settings.ollama_url == "http://localhost:11434"
+        assert settings.ollama_url == "http://tsumego:11434"
 
     def test_default_zork_game_path(self):
         """Test zork_game_path has a default."""

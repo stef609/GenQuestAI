@@ -87,13 +87,13 @@ uv init
   - Ollama running locally with a model pulled
 
   Run the application:
-  uv run src/main.py
+  uv run python -m src.main
 
   Configure via environment variables:
   export MAX_ITERATIONS=100
   export OLLAMA_MODEL="qwen2.5:14b"
   export ZORK_GAME_PATH="/usr/games/zork"
-  uv run src/main.py
+  uv run python -m src.main
 
   Run tests:
   uv run pytest tests/ -v

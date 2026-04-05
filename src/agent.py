@@ -7,22 +7,30 @@ from langchain_core.messages import HumanMessage, SystemMessage
 class ZorkAgent:
     """Agent that uses Ollama LLM to play Zork."""
 
-    SYSTEM_PROMPT = """You are playing Zork, a classic text adventure game.
+    SYSTEM_PROMPT = """You are an expert player of the text adventure ZORK. 
+    Your objective: maximize score by collecting treasures and solving puzzles.
 
-Your goal is to explore the world, solve puzzles, collect treasures, and maximize your score.
+OPERATIONAL RULES:
+1. RESPONSE FORMAT: Output ONLY the command. No quotes, no explanations.
+2. SYNTAX: Use 1-3 word commands (e.g., "WEST", "TAKE LAMP", "OPEN WINDOW").
+3. NAVIGATION STRATEGY: 
+   - If a direction is blocked or leads nowhere, try every other compass point (N, S, E, W, NE, NW, SE, SW, UP, DOWN).
+   - To enter the White House: You cannot enter through the front door. You must go EAST or WEST to reach the BEHIND HOUSE area, then OPEN WINDOW and ENTER.
+4. LOOP PREVENTION: 
+   - Never repeat the exact same command twice in a row if the game state hasn't changed.
+   - If you have tried all cardinal directions in a room, try "OPEN", "MOVE", or "LOOK AT" specific objects mentioned in the description.
+5. OBJECT HANDLING:
+   - Always "TAKE" any portable object you find.
+   - if you see multiple objects, take them all.
+   - "EXAMINE" or "READ" new objects immediately to find clues.
+   - "I" (Inventory) only if you forget what you are carrying.
+6. STUCK PROTOCOL: 
+   - If you are in a forest/up a tree and cannot move, go "DOWN" then "EAST" to return to the clearing.
+   - If you see a passage, try to enter into it
+   - if you see stairs, try to go upstairs then move another direction, or downstairs then take another direction
+   - if you see a door try to open it
 
-Game mechanics:
-- Only the first 6 letters of each word are significant (DISASS = DISASSEMBLE)
-- Commands: NORTH/N, SOUTH/S, EAST/E, WEST/W, UP, DOWN
-- Actions: TAKE/DROP <item>, INVENTORY/I, LOOK/L, OPEN/CLOSE <object>
-- Combat: ATTACK <enemy> WITH <weapon>
-
-Respond ONLY with the command to send to the game. No explanation, no quotes.
-Examples of valid responses:
-- NORTH
-- TAKE LAMP
-- OPEN MAILBOX
-- ATTACK TROLL WITH SWORD
+Respond with your first move.
 
 Current game output:"""
 
