@@ -21,7 +21,7 @@ OPERATIONAL RULES:
    - If you have tried all cardinal directions in a room, try "OPEN", "MOVE", or "LOOK AT" specific objects mentioned in the description.
 5. OBJECT HANDLING:
    - Always "TAKE" any portable object you find.
-   - if you see multiple objects, take them all.
+   - if you see multiple objects, take them all (one at a time).
    - "EXAMINE" or "READ" new objects immediately to find clues.
    - "I" (Inventory) only if you forget what you are carrying.
 6. STUCK PROTOCOL: 
@@ -31,6 +31,13 @@ OPERATIONAL RULES:
    - if you see a door try to open it
 
 Respond with your first move.
+
+SUMMARY FROM PREVIOUS RUN TO USE AS CONTEXT FOR IMPROVEMENT:
+I was unable to collect any treasures or solve puzzles due to an impasse in the vertical movement. The only 
+command that worked was "DOWN", but it led to a dead-end with a locked grating. After 20 iterations, no progress could be made 
+beyond this point. I should have tried alternative navigation strategies, such as going east-west instead of north-south, or 
+examining objects more closely for hidden clues. To improve performance in the next session, I will prioritize exploring different 
+directions and examining objects to uncover potential solutions.
 
 Current game output:"""
 
@@ -97,3 +104,24 @@ Current game output:"""
         command = command.upper()
 
         return command
+    
+    def create_summary(self, final_output: str, iterations_used: int) -> str:
+        """Create a summary of the game session for future reference.
+
+        Args:
+            final_output: The final output from the game
+            iterations_used: Number of iterations used in the session   
+        Returns:
+            A summary string to be used in the next game session
+        """        
+        summary_prompt = f"""Based on the final game output and the number of iterations used, create a concise summary of the key events, treasures collected, puzzles solved, and any important locations visited during this Zork session. The summary should be no more than 5 sentences and should highlight the most significant achievements and challenges faced. This summary will be provided at the start of the next game session to help improve performance and strategy.
+Final game output: {final_output}
+Iterations used: {iterations_used}
+"""
+        messages = [
+            SystemMessage(content=self.SYSTEM_PROMPT),
+            HumanMessage(content=summary_prompt),
+        ]
+
+        response = self.llm.invoke(messages)
+        return response.content

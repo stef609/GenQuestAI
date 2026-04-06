@@ -92,3 +92,13 @@ class ProgressLogger:
     def show_separator(self) -> None:
         """Display a separator line."""
         self.console.print("─" * 67, style="dim")
+    
+    def show_summary(self, summary: str) -> None:
+        """Display the summary of the game session.
+
+        Args:
+            summary: The summary text to display
+        """
+        self.console.print()
+        self.console.print("[bold magenta]Session Summary for Next Run:[/]")
+        self.console.print(summary)

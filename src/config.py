@@ -19,7 +19,10 @@ class Settings(BaseSettings):
         description="Maximum number of game iterations",
     )
     ollama_model: str = Field(
-        default="llama3.1:latest",
+        default="llama3.1:latest", # up to 10 points won - could enter house and go upstairs
+#        default="gemma4:e2b",      # 0 points won
+#        default="granite3.2:latest",# 0 points - could enter house 
+#        default="gemma4:31b-cloud",   # 10 points won
         description="Ollama model name to use",
     )
     ollama_url: str = Field(

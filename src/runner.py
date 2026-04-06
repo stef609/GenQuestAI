@@ -55,6 +55,10 @@ class GameRunner:
                     logger.show_game_ended()
                     break
 
+            # ask LLM to create a summary of the session that will be given at the start of next game, so it can improve its score at the next run
+            summary = agent.create_summary(output, iterations_used)
+            logger.show_summary(summary)
+            
             # Get and display final score
             final_score = game.get_score()
             if final_score is None:
